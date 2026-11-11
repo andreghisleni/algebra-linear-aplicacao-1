@@ -1,0 +1,19 @@
+\frametitle{Movimento Contínuo: Scilab (Loop)}
+No Scilab, implementamos um loop infinito (\texttt{while}) com controle de tempo (\texttt{sleep}) para simular o movimento real da partícula.
+
+    \begin{block}{Script de Animação em Loop}
+\begin{verbatim}
+while %t  // Loop Infinito
+    for i = 1:length(t)
+        // Se fechar a janela, encerra o script
+        if ~is_handle_valid(particula) then break; end
+
+        // Atualiza posição da partícula
+        particula.data = [cos(t(i)), sin(t(i)), t(i)];
+        sleep(30); // Controla a velocidade (FPS)
+    end
+    if ~is_handle_valid(particula) then break; end
+end
+\end{verbatim}
+    \end{block}
+    \small \textbf{Dica:} O comando \texttt{sleep(30)} define a suavidade do "vídeo". Valores menores aumentam a velocidade da partícula.

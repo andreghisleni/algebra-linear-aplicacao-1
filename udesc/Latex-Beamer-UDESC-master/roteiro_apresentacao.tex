@@ -1,0 +1,126 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage[margin=1.6cm,headheight=14pt]{geometry}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{amsmath,amssymb}
+\usepackage{tabularx,booktabs}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\definecolor{udescgreen}{HTML}{365841}
+\definecolor{queryorange}{HTML}{D77A35}
+\definecolor{softgreen}{HTML}{E7EEE8}
+\definecolor{ink}{HTML}{243329}
+\definecolor{softgray}{HTML}{F2F4F2}
+
+\hypersetup{colorlinks=true,linkcolor=udescgreen,urlcolor=udescgreen}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{udescgreen}\textbf{ROTEIRO DE APRESENTAÇÃO}}
+\fancyhead[R]{\small\color{udescgreen}Álgebra Linear · Aplicação 1}
+\fancyfoot[C]{\small\color{udescgreen}\thepage}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlist[itemize]{leftmargin=1.2em,itemsep=2pt,topsep=2pt}
+\setlist[enumerate]{leftmargin=1.45em,itemsep=3pt,topsep=3pt}
+
+\newcommand{\lembrete}[1]{\textcolor{udescgreen}{\textbf{Lembrete:}} #1}
+\newcommand{\transicao}[1]{\textcolor{queryorange}{\textbf{Transição:}} \emph{#1}}
+\newcommand{\secao}[1]{\vspace{3pt}{\large\color{udescgreen}\textbf{#1}}\par\vspace{1pt}\hrule\vspace{4pt}}
+
+\begin{document}
+
+{\LARGE\color{udescgreen}\textbf{Cola para apresentar}}\\[-1pt]
+{\large\color{ink}Busca de documentos com similaridade por cosseno}\\
+{\small Base: Steven J. Leon, \textit{Álgebra Linear com Aplicações}, Aplicação 1, pp. 191--193 (PDF pp. 197--199).}
+
+\vspace{5pt}
+\colorbox{softgreen}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\textbf{Mensagem central.} A busca e cada documento são representados por vetores. O cosseno do ângulo entre eles dá um escore para ordenar quais documentos mais se parecem com a consulta.}}
+
+\secao{Roteiro dos slides}
+
+\textbf{1. Capa — apresente a pergunta.}\\
+Como encontrar os módulos que melhor correspondem a uma lista de palavras? A aplicação do livro transforma a busca em um problema geométrico de álgebra linear.
+
+\textbf{2. Documentos como matriz.}\\
+Explique que as linhas são 10 palavras-chave e as colunas são 8 módulos. Cada entrada conta a frequência de uma palavra num módulo. A matriz é $A\in\mathbb{R}^{10\times8}$.\\
+\lembrete{não é uma matriz de similaridades ainda; ela contém frequências.}\\
+\transicao{agora representamos a pergunta da pessoa também como um vetor.}
+
+\textbf{3. Vetor de busca.}\\
+A consulta usa \emph{ortogonalidade}, \emph{espaços} e \emph{vetor}. Só as posições dessas palavras ficam diferentes de zero, com peso $1/\sqrt{3}\approx0{,}577$. Assim, $\|x\|=1$ e os três termos recebem o mesmo peso.\\
+\lembrete{na ordem da tabela do livro, os valores não nulos estão nas posições 6, 7 e 10.}
+
+\textbf{4. Normalização e cosseno.}\\
+Cada vetor-documento $a_j$ é normalizado: $q_j=a_j/\|a_j\|$. O escore é $y_j=q_j^{\mathsf T}x=\cos\theta_j$. Vetores mais alinhados dão escores maiores; vetores ortogonais dão zero.\\
+\lembrete{normalizar reduz o efeito do tamanho total do vetor; comparar cossenos é comparar direções. A figura 2D é esquemática: os vetores reais têm 10 componentes.}
+
+\textbf{5. Fluxo.}\\
+Recapitule em voz alta: matriz de frequências $\rightarrow$ normalização das colunas $\rightarrow$ produto interno com a consulta $\rightarrow$ ranking. A operação conjunta é $y=Q^{\mathsf T}x$.
+
+\textbf{6. Ranking.}\\
+Leia apenas os principais resultados: M5 fica em primeiro com 0,635; depois vêm M6 com 0,577, M3 com 0,567 e M8 com 0,535. M1 e M7 recebem zero porque não têm nenhum dos três termos da consulta.
+
+\newpage
+
+{\LARGE\color{udescgreen}\textbf{Conta, interpretação e perguntas}}\\[-1pt]
+{\small Continuação do roteiro de apoio · Aplicação 1}
+
+\secao{Termine o percurso dos slides}
+
+\textbf{7. Por que M5 lidera?}\\
+Mostre as três componentes de $q_5$ que correspondem à consulta: 0,400; 0,300; 0,400. Calcule o produto interno:
+\[
+q_5^{\mathsf T}x
+=0{,}400(0{,}577)+0{,}300(0{,}577)+0{,}400(0{,}577)
+=\frac{0{,}400+0{,}300+0{,}400}{\sqrt{3}}
+\approx0{,}635.
+\]
+\lembrete{arredondamentos explicam pequenas diferenças no último decimal.}
+
+\textbf{8. Conclusão e limites.}\\
+O método ordena documentos usando as frequências e o ângulo. Mas uma busca literal não entende automaticamente que duas palavras são sinônimas nem distingue sentidos diferentes da mesma palavra. O texto aponta a indexação semântica latente (ISL), baseada em decomposição por valores singulares, como técnica mais avançada.
+
+\secao{Números para consultar rapidamente}
+\begin{center}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{@{}lr@{\hspace{1.0cm}}lr@{}}
+\toprule
+\textbf{Módulo} & \textbf{Escore} & \textbf{Módulo} & \textbf{Escore}\\
+\midrule
+M5 & 0,635 & M4 & 0,331\\
+M6 & 0,577 & M2 & 0,229\\
+M3 & 0,567 & M1 & 0,000\\
+M8 & 0,535 & M7 & 0,000\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\secao{Perguntas prováveis}
+
+\textbf{Por que normalizar os documentos?} Para pôr os vetores numa escala comum e fazer a comparação focar na direção, não apenas no comprimento bruto do vetor de frequências.
+
+\textbf{0,635 significa 63,5\% de relevância?} Não. É o cosseno do ângulo entre os vetores normalizados e serve como escore de ordenação. Não é probabilidade nem porcentagem.
+
+\textbf{Por que M1 e M7 têm escore zero?} Neste exemplo, eles não contêm nenhuma palavra da consulta. Logo, o produto interno com o vetor de busca é zero.
+
+\textbf{O cosseno resolve sinônimos e polissemia?} Não nesta representação simples por contagem literal. Esse é um dos motivos para técnicas semânticas posteriores, como a ISL/SVD.
+
+\secao{Não esqueça}
+\begin{itemize}
+  \item Diga que o vetor da busca também é unitário.
+  \item Diferencie frequência (entrada da matriz) de similaridade (produto interno após normalização).
+  \item Explique o que os zeros significam neste exemplo, sem generalizar para toda busca.
+  \item Não chame o escore de percentual ou probabilidade.
+  \item Feche com a limitação semântica e a conexão com ISL/SVD.
+\end{itemize}
+
+\vfill
+{\small\color{udescgreen}\textbf{Frase de fechamento:} “A geometria transforma a busca por palavras em comparação de direções: quanto mais alinhado o documento com a consulta, maior seu cosseno e melhor sua posição no ranking.”}
+
+\end{document}
